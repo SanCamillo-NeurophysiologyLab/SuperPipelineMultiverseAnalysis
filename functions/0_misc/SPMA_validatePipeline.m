@@ -16,7 +16,7 @@
 % 
 % See also: JSONDECODE
 
-function SPMA_validatePipeline(pipelineJSON, opt)
+function pipeline = SPMA_validatePipeline(pipelineJSON, opt)
     arguments (Input)
         pipelineJSON string {mustBeFile}
         % Save options
