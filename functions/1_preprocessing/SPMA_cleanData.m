@@ -11,6 +11,8 @@
 % Optional inputs
 %    Severity  = [string] Severity of the paraemters to clean data.
 %               Available values are "loose" or "strict".
+%    SaveExcludedChannels = [logical] Whether to save or not the list of
+%               excluded channels.
 %
 % Outputs:
 %    EEG = [struct] EEG struct using EEGLAB structure system
@@ -24,6 +26,7 @@ function [EEG] = SPMA_cleanData(EEG, opt)
         EEG struct
         % Optional
         opt.Severity string {mustBeMember(opt.Severity, ["loose", "strict"])}
+        opt.SaveExcludedChannels logical
         opt.EEGLAB (1,:) cell
         % Save options
         opt.Save logical
@@ -77,6 +80,8 @@ function [EEG] = SPMA_cleanData(EEG, opt)
             error("Available types are only 'loose' and 'strict'. %s not available.", config.Severity)
     end
 
+    chans_before = {EEG.chanlocs.labels};
+
     EEG = pop_clean_rawdata(EEG, ...
         'FlatlineCriterion',flatlineCrit,...
         'ChannelCriterion',channelCrit, ...
@@ -88,6 +93,21 @@ function [EEG] = SPMA_cleanData(EEG, opt)
         'Distance',distance, ...
         'WindowCriterionTolerances',windowCritTol, ...
         config.EEGLAB{:});
+    
+    chans_after = {EEG.chanlocs.labels};
+    chans_excluded = setdiff(chans_before, chans_after);
+
+    log.info("Excluded channels: " + strjoin(chans_excluded))
+    if config.SaveExcludedChannels
+        nameChansExcluded = sprintf("%s_%s",config.SaveName, "ExcludedChannels");
+        log.info(sprintf("Saving excluded channels in %s", nameChansExcluded));
+
+        logParams = unpackStruct(logConfig);
+
+        SPMA_saveData(chans_excluded, "Name",nameChansExcluded, "Folder", module, "OutputFolder",config.OutputFolder, logParams{:});
+        writematrix([preproc_path, out_subj_path, curr_subj_name, '_clean_bad_channels.txt'], EEG_chans_7_excluded);
+    end
+
 
     %% Save
     if config.Save

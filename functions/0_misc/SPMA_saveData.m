@@ -82,17 +82,29 @@ function SPMA_saveData(data, opt)
     switch dataType
         case "EEGLAB"
             saveExt = 'set';
-            opt.Name = sprintf("%s.%s", opt.Name, saveExt);
+            filename = sprintf("%s.%s", opt.Name, saveExt);
             % Save with EEGLAB function
-            log.info(sprintf("Save EEGLAB dataset: %s", fullfile(saveFolder,opt.Name)))
+            log.info(sprintf("Save EEGLAB dataset: %s", fullfile(saveFolder,filename)))
             try
                 pop_saveset(data,...
-                    'filename', opt.Name,...
+                    'filename', filename,...
                     'filepath', saveFolder,...
                     'savemode', 'onefile', ...
                     'version', '7.3')
             catch ME
                 log.error("EEGLAB saveset not working.")
+                unknownType = true;
+            end
+        case "CellArray"
+            saveExt = 'csv';
+            filename = sprintf("%s.%s", opt.Name, saveExt);
+            savePath = fullfile(saveFolder,filename);
+            % Save with writecell function
+            log.info(sprintf("Save csv data: %s", savePath))
+            try
+                writecell(data, savePath,"Delimiter",",");
+            catch ME
+                log.error("Function writecell not working.")
                 unknownType = true;
             end
         otherwise

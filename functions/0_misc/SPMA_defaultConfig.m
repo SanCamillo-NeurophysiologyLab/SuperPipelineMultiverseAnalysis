@@ -95,6 +95,7 @@ preproc.selectTime.SaveName = "selectTime";
 preproc.selectTime.OutputFolder = "";
 
 preproc.cleanData.Severity = "loose";
+preproc.cleanData.SaveExcludedChannels = true;
 preproc.cleanData.EEGLAB = {};
 preproc.cleanData.Save = false;
 preproc.cleanData.SaveName = "cleanData";

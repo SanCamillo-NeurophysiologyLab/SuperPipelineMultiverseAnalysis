@@ -8,7 +8,7 @@
 %
 % Outputs:
 %    dataType = [string] The datatype of the input object. Possible values
-%           are: "Unknown", "EEGLAB"
+%           are: "Unknown", "EEGLAB", "CellArray"
 %
 % Authors: Alessandro Tonin, IRCCS San Camillo Hospital, 2024
 % 
@@ -27,7 +27,12 @@ function [dataType] = SPMA_checkDataType(data)
     if isEEGLAB(data)
         dataType = "EEGLAB";
         return
+    elseif iscell(data)
+        dataType = "CellArray";
+        return
     end
+
+
 
 end
 
