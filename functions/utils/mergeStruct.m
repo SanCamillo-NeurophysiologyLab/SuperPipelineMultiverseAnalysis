@@ -14,36 +14,42 @@
 %   subStruct   = [struct] A substructure used to overwrite fields from the
 %                   main structure
 %
+% Optional inputs:
+%   addMissingFields   = [logical] Whether to add fields of subStructs or not.
+%                   Default false.
+%
 % Outputs:
 %   structFinal = [struct] A structure with the same fields of the main
 %                   structure, but the values can be updated.
 %
 % Authors: Alessandro Tonin, IRCCS San Camillo Hospital, 2024
 
-function structFinal = mergeStruct(mainStruct,subStructs)
+function structFinal = mergeStruct(mainStruct,subStructs,opt)
     arguments
         mainStruct struct
     end
     arguments (Repeating)
         subStructs struct
     end
+    arguments
+        opt.addMissingFields logical = false
+    end
 
     structFinal = mainStruct;
-    mainFields = fieldnames(structFinal);
 
-    n = numel(subStructs);
+    for subStruct = subStructs{:}
 
-    for structNum = 1:n
+        subStructFields = fieldnames(subStruct);
 
-        subStruct = subStructs{structNum};
-
-        for fieldNum = 1:length(mainFields)
-            field = mainFields{fieldNum};
-            if isfield(subStruct, field)
-                field_val = subStruct.(field);
+        for n_field = 1:length(subStructFields)
+            field = subStructFields{n_field};
+            field_val = subStruct.(field);
+            if isfield(structFinal, field)
                 if isstruct(field_val)
                     field_val = mergeStruct(structFinal.(field), field_val);
                 end
+                structFinal.(field) = field_val;
+            elseif opt.addMissingFields
                 structFinal.(field) = field_val;
             end
         end

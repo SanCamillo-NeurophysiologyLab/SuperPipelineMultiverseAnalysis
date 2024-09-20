@@ -50,7 +50,9 @@ function data = SPMA_runPipeline(data, pipelineJSON, opt)
         allPipelines{n_pipeline} = pipeline;
     end
     log.info("Merging all pipelines")
-    pipeline = mergeStruct(allPipelines{:});
+    pipeline = mergeStruct(allPipelines{:},"addMissingFields",true);
+    % Reorder fields
+    pipeline = orderfields(pipeline);
     log.info("Final merged pipeline is:")
     log.info("\n"+jsonencode(pipeline, "PrettyPrint", true));
 
