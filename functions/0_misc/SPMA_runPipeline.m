@@ -5,9 +5,9 @@
 %     >> SPMA_runPipeline(pipelineJSON, data, "OutputFolder", output)
 %
 % Inputs:
-%    pipelineJSON = [string] A json file
 %    data    = [struct] The name of the saved file (default: the name
 %           of the calling function)
+%    pipelineJSON = [string] A json file
 %    saveFolder  = [string] The folder where to save the file (default: the
 %           name of the module of the calling function)
 %
@@ -16,10 +16,14 @@
 % 
 % See also: SAVE, POP_SAVESET
 
-function data = SPMA_runPipeline(pipelineJSON, data, opt)
+function data = SPMA_runPipeline(data, pipelineJSON, opt)
     arguments (Input)
-        pipelineJSON string {mustBeFile}
         data
+    end
+    arguments (Repeating)
+        pipelineJSON string {mustBeFile}
+    end
+    arguments (Input)
         opt.OutputFolder string
     end
 
@@ -36,21 +40,30 @@ function data = SPMA_runPipeline(pipelineJSON, data, opt)
     log.info(">>> START MULTIVERSE ANALYSIS <<<")
 
     %% Load pipeline
-    log.info("Validate pipeline...")
-    SPMA_validatePipeline(pipelineJSON);
-    log.info("...Pipeline is valid!")
-
-    pipeline_str = fileread(pipelineJSON);
-    pipeline = jsondecode(pipeline_str);
-
-    log.info(sprintf("Pipeline file: %s", pipelineJSON));
+    allPipelines = cell(size(pipelineJSON));
+    for n_pipeline = 1:length(pipelineJSON)
+        pipelineFile = pipelineJSON{n_pipeline};
+        log.info(sprintf("Validate pipeline %s...", pipelineFile))
+        pipeline = SPMA_validatePipeline(pipelineFile);
+        log.info("...Pipeline is valid!")
+        log.info("\n"+jsonencode(pipeline, "PrettyPrint", true));
+        allPipelines{n_pipeline} = pipeline;
+    end
+    log.info("Merging all pipelines")
+    pipeline = mergeStruct(allPipelines{:});
+    log.info("Final merged pipeline is:")
     log.info("\n"+jsonencode(pipeline, "PrettyPrint", true));
 
     logParams = unpackStruct(logOptions);
     SPMA_drawPipeline(pipeline, "OutputFolder", config.OutputFolder, logParams{:})
 
     % Save pipeline
-    copyfile(pipelineJSON, config.OutputFolder)
+    pipelineSaveName = 'pipeline.json';
+    pipelineSaveFullPath = fullfile(config.OutputFolder, pipelineSaveName);
+    log.info("Saving final pipeline in %s",pipelineSaveFullPath)
+    fid = fopen(pipelineSaveFullPath, "w");
+    fprintf(fid,jsonencode(pipeline, "PrettyPrint", true));
+    fclose(fid);
 
     %% Starts the loop
     steps = fieldnames(pipeline);
