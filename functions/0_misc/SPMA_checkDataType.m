@@ -19,7 +19,7 @@ function [dataType] = SPMA_checkDataType(data)
         data
     end
     arguments (Output)
-        dataType string {mustBeMember(dataType, ["Unknown", "EEGLAB"])}
+        dataType string {mustBeMember(dataType, ["Unknown", "EEGLAB", "CellArray"])}
     end
 
     dataType = "Unknown";

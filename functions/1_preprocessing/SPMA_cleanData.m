@@ -105,7 +105,6 @@ function [EEG] = SPMA_cleanData(EEG, opt)
         logParams = unpackStruct(logConfig);
 
         SPMA_saveData(chans_excluded, "Name",nameChansExcluded, "Folder", module, "OutputFolder",config.OutputFolder, logParams{:});
-        writematrix([preproc_path, out_subj_path, curr_subj_name, '_clean_bad_channels.txt'], EEG_chans_7_excluded);
     end
 
 

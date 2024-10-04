@@ -62,7 +62,7 @@ function data = SPMA_runPipeline(data, pipelineJSON, opt)
     % Save pipeline
     pipelineSaveName = 'pipeline.json';
     pipelineSaveFullPath = fullfile(config.OutputFolder, pipelineSaveName);
-    log.info("Saving final pipeline in %s",pipelineSaveFullPath)
+    log.info(sprintf("Saving final pipeline in %s",pipelineSaveFullPath))
     fid = fopen(pipelineSaveFullPath, "w");
     fprintf(fid,jsonencode(pipeline, "PrettyPrint", true));
     fclose(fid);

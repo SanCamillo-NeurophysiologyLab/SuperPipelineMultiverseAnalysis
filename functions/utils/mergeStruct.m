@@ -36,7 +36,12 @@ function structFinal = mergeStruct(mainStruct,subStructs,opt)
     end
 
     structFinal = mainStruct;
-
+    
+    if isempty(subStructs)
+        % No need to merge anything
+        return
+    end
+    
     for subStruct = subStructs{:}
 
         subStructFields = fieldnames(subStruct);
@@ -54,6 +59,5 @@ function structFinal = mergeStruct(mainStruct,subStructs,opt)
             end
         end
     end
-
 end
 
