@@ -1,27 +1,27 @@
+function [EEG] = SPMA_filter(EEG, opt)
 % SPMA_FILTER - Filter an EEG dataset. Based on EEGLAB functions.
 %
-% Usage:
-%     >> [EEG] = SPMA_filter(EEG);
-%     >> [EEG] = SPMA_filter(EEG, 'key', val);
-%     >> [EEG] = SPMA_filter(EEG, key=val);
+% Examples:
+%    >>> [EEG] = SPMA_filter(EEG);
+%    >>> [EEG] = SPMA_filter(EEG, 'key', val);
+%    >>> [EEG] = SPMA_filter(EEG, key=val);
 %
-% Inputs:
-%    EEG        = [struct] EEG struct using EEGLAB structure system
+% Parameters:
+%    EEG (struct): EEG struct using EEGLAB structure system
 %
-% Optional inputs:
-%    Type       = [string] Type of the filter. Allowed values are:
-%                   'bandpass', 'lowpass', 'highpass', 'bandstop'
-%    LowCutoff   = [double] The low cutoff frequency
-%    HighCutoff   = [double] The high cutoff frequency
+% Other Parameters:
+%    Type (string): Type of the filter. Allowed values are: `bandpass`, `lowpass`, `highpass`, `bandstop`
+%    LowCutoff (double): The low cutoff frequency
+%    HighCutoff (double): The high cutoff frequency
 %
-% Outputs:
-%    EEG = [struct] filtered EEG struct using EEGLAB structure system
-%
-% Authors: Alessandro Tonin, IRCCS San Camillo Hospital, 2024
+% Returns:
+%    EEG (struct): filtered EEG struct using EEGLAB structure system
 % 
-% See also: EEGLAB, POP_EEGFILTNEW
+% See also: 
+%    EEGLAB, POP_EEGFILTNEW
 
-function [EEG] = SPMA_filter(EEG, opt)
+% Authors: Alessandro Tonin, IRCCS San Camillo Hospital, 2024
+
     arguments (Input)
         EEG struct
         % Optional

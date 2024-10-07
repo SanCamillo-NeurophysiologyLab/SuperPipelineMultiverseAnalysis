@@ -1,24 +1,25 @@
+function [EEG] = SPMA_removeChannels(EEG, opt)
 % SPMA_REMOVECHANNELS - Remove a list of channels from an EEG dataset.
 %
-% Usage:
-%     >> [EEG] = SPMA_removeChannels(EEG)
-%     >> [EEG] = SPMA_removeChannels(EEG, 'key', val) 
-%     >> [EEG] = SPMA_removeChannels(EEG, key=val) 
+% Examples:
+%     >>> [EEG] = SPMA_removeChannels(EEG)
+%     >>> [EEG] = SPMA_removeChannels(EEG, 'key', val) 
+%     >>> [EEG] = SPMA_removeChannels(EEG, key=val) 
 %
-% Inputs:
-%    EEG        = [struct] EEG struct using EEGLAB structure system
+% Parameters:
+%    EEG (struct): EEG struct using EEGLAB structure system
 %
-% Optional inputs
-%    Channels  = [{str}] Cell array with channel names
+% Other Parameters:
+%    Channels ({str}): Cell array with channel names
 %
-% Outputs:
-%    EEG = [struct] EEG struct using EEGLAB structure system
-%
-% Authors: Alessandro Tonin, IRCCS San Camillo Hospital, 2024
+% Returns:
+%    EEG (struct): EEG struct using EEGLAB structure system
 % 
-% See also: EEGLAB, POP_SELECT
+% See also: 
+%    EEGLAB, POP_SELECT
 
-function [EEG] = SPMA_removeChannels(EEG, opt)
+% Authors: Alessandro Tonin, IRCCS San Camillo Hospital, 2024
+
     arguments (Input)
         EEG struct
         % Optional

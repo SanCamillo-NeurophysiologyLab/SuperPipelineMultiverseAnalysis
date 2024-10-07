@@ -1,28 +1,29 @@
+function [EEG] = SPMA_runica(EEG, opt)
 % SPMA_RUNICA - Perform ICA decomposition with Infomax ICA algorithm.
 %
-% Usage:
-%     >> [EEG] = SPMA_runica(EEG)
-%     >> [EEG] = SPMA_runica(EEG, 'key', val) 
-%     >> [EEG] = SPMA_runica(EEG, key=val) 
+% Examples:
+%     >>> [EEG] = SPMA_runica(EEG)
+%     >>> [EEG] = SPMA_runica(EEG, 'key', val) 
+%     >>> [EEG] = SPMA_runica(EEG, key=val) 
 %
-% Inputs:
-%    EEG        = [struct] EEG struct using EEGLAB structure system
+% Parameters:
+%    EEG (struct): EEG struct using EEGLAB structure system
 %
-% Optional inputs
-%    Extended  = [integer] perform TANH "extended-ICA" with sign estimation
+% Other Parameters:
+%    Extended (integer): perform TANH "extended-ICA" with sign estimation
 %               N training blocks
-%    Interrupt = [logical] draw interrupt figure
-%    SaveBefore = [logical] save data before running ICA
-%    SaveBeforeName = [string] name of saved data before running ICA
+%    Interrupt (logical): draw interrupt figure
+%    SaveBefore (logical): save data before running ICA
+%    SaveBeforeName (string): name of saved data before running ICA
 %
-% Outputs:
-%    EEG = [struct] EEG struct using EEGLAB structure system
-%
-% Authors: Alessandro Tonin, IRCCS San Camillo Hospital, 2024
+% Returns:
+%    EEG (struct): EEG struct using EEGLAB structure system
 % 
-% See also: EEGLAB, POP_RUNICA, RUNICA
+% See also:
+%    EEGLAB, POP_RUNICA, RUNICA
 
-function [EEG] = SPMA_runica(EEG, opt)
+% Authors: Alessandro Tonin, IRCCS San Camillo Hospital, 2024
+
     arguments (Input)
         EEG struct
         % Optional

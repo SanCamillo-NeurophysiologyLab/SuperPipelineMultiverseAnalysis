@@ -1,24 +1,25 @@
+function [EEG] = SPMA_selectChannels(EEG, opt)
 % SPMA_SELECTCHANNELS - Select a list of channels from an EEG dataset.
 %
-% Usage:
-%     >> [EEG] = SPMA_selectChannels(EEG)
-%     >> [EEG] = SPMA_selectChannels(EEG, 'key', val) 
-%     >> [EEG] = SPMA_selectChannels(EEG, key=val) 
+% Examples:
+%     >>> [EEG] = SPMA_selectChannels(EEG)
+%     >>> [EEG] = SPMA_selectChannels(EEG, 'key', val) 
+%     >>> [EEG] = SPMA_selectChannels(EEG, key=val) 
 %
-% Inputs:
-%    EEG        = [struct] EEG struct using EEGLAB structure system
+% Parameters:
+%    EEG (struct): EEG struct using EEGLAB structure system
 %
-% Optional inputs
-%    Channels  = [{str}] Cell array with channel names
+% Other Parameters:
+%    Channels ({str}): Cell array with channel names
 %
-% Outputs:
-%    EEG = [struct] EEG struct using EEGLAB structure system
-%
-% Authors: Alessandro Tonin, IRCCS San Camillo Hospital, 2024
+% Returns:
+%    EEG (struct): EEG struct using EEGLAB structure system
 % 
-% See also: EEGLAB, POP_SELECT
+% See also: 
+%    EEGLAB, POP_SELECT
 
-function [EEG] = SPMA_selectChannels(EEG, opt)
+% Authors: Alessandro Tonin, IRCCS San Camillo Hospital, 2024
+
     arguments (Input)
         EEG struct
         % Optional

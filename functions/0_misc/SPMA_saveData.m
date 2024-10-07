@@ -1,27 +1,28 @@
+function SPMA_saveData(data, opt)
 % SPMA_SAVEDATA - Save a data object. The saved data can be in different
 % format depending on the module where it is saved.
 %
-% Usage:
-%     >> SPMA_saveData(data)
-%     >> SPMA_saveData(data, opt.Name)
-%     >> SPMA_saveData(data, opt.Name, opt.Folder)
+% Example:
+%     >>> SPMA_saveData(data)
+%     >>> SPMA_saveData(data, opt.Name)
+%     >>> SPMA_saveData(data, opt.Name, opt.Folder)
 %
-% Inputs:
-%    data        = [any] A set of data
+% Parameters:
+%    data (any): A set of data
 %
-% Optional inputs:
-%    Name    = [string] The name of the saved file (default: the name
+% Other Parameters:
+%    Name (string): The name of the saved file (default: the name
 %           of the calling function)
-%    Folder  = [string] The folder where to save the file (default: the
+%    Folder (string): The folder where to save the file (default: the
 %           name of the module of the calling function)
-%    OutputFolder = [string] The main folder for all output files. (default: 'output/date')
+%    OutputFolder (string): The main folder for all output files. (default: 'output/date')
 %
-%
+% See also: 
+%   SAVE, POP_SAVESET
+
 % Authors: Alessandro Tonin, IRCCS San Camillo Hospital, 2024
 % 
-% See also: SAVE, POP_SAVESET
 
-function SPMA_saveData(data, opt)
     arguments (Input)
         data
         % Optional

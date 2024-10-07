@@ -1,27 +1,28 @@
+function [EEG] = SPMA_selectTime(EEG, opt)
 % SPMA_SELECTTIME - Select a time window from an EEG dataset.
 %
-% Usage:
-%     >> [EEG] = SPMA_selectTime(EEG)
-%     >> [EEG] = SPMA_selectTime(EEG, 'key', val) 
-%     >> [EEG] = SPMA_selectTime(EEG, key=val) 
+% Examples:
+%     >>> [EEG] = SPMA_selectTime(EEG)
+%     >>> [EEG] = SPMA_selectTime(EEG, 'key', val) 
+%     >>> [EEG] = SPMA_selectTime(EEG, key=val) 
 %
-% Inputs:
-%    EEG        = [struct] EEG struct using EEGLAB structure system
+% Parameters:
+%    EEG (struct): EEG struct using EEGLAB structure system
 %
-% Optional inputs
-%    AfterStart  = [double] Seconds to select after the start of the
+% Other Parameters:
+%    AfterStart (double): Seconds to select after the start of the
 %                   recording
-%    BeforeEnd   = [double] Seconds to select before the end of the
+%    BeforeEnd (double): Seconds to select before the end of the
 %                   recording
 %
-% Outputs:
-%    EEG = [struct] EEG struct using EEGLAB structure system
-%
-% Authors: Alessandro Tonin, IRCCS San Camillo Hospital, 2024
+% Returns:
+%    EEG (struct): EEG struct using EEGLAB structure system
 % 
-% See also: EEGLAB, POP_SELECT
+% See also: 
+%    EEGLAB, POP_SELECT
 
-function [EEG] = SPMA_selectTime(EEG, opt)
+% Authors: Alessandro Tonin, IRCCS San Camillo Hospital, 2024
+
     arguments (Input)
         EEG struct
         % Optional

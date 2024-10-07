@@ -1,22 +1,26 @@
+function pipeline = SPMA_validatePipeline(pipelineJSON, opt)
 % SPMA_VALIDATEPIPELINE - Validate a pipeline by checking that all the
 % required fields are filled and that the overall structure is compatible
 % with SPMA.
 %
-% Usage:
-%     >> SPMA_validatePipeline(pipelineJSON)
-%     >> SPMA_validatePipeline(pipelineJSON, 'key', 'val')
+% Examples:
+%     >>> SPMA_validatePipeline(pipelineJSON)
+%     >>> SPMA_validatePipeline(pipelineJSON, 'key', 'val')
 %
-% Inputs:
-%    pipelineJSON = [string] A json file with the pipeline
+% Parameters:
+%    pipelineJSON (string): A json file with the pipeline
 %
-% Optional inputs
-%    OutputFolder = [string] The output folder where to save the logs
+% Other Parameters:
+%    OutputFolder (string): The output folder where to save the logs
 %
-% Authors: Alessandro Tonin, IRCCS San Camillo Hospital, 2024
+% Returns:
+%   pipeline (string): The validated pipeline converted to matlab string
+%
+% See also: 
+%   JSONDECODE
 % 
-% See also: JSONDECODE
+% Authors: Alessandro Tonin, IRCCS San Camillo Hospital, 2024
 
-function pipeline = SPMA_validatePipeline(pipelineJSON, opt)
     arguments (Input)
         pipelineJSON string {mustBeFile}
         % Save options

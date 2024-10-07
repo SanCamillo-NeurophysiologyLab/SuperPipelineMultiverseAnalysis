@@ -1,27 +1,29 @@
+function [EEG] = SPMA_cleanData(EEG, opt)
 % SPMA_CLEANDATA - Automatic data cleaning removing bad channels.
 %
-% Usage:
-%     >> [EEG] = SPMA_cleanData(EEG)
-%     >> [EEG] = SPMA_cleanData(EEG, 'key', val) 
-%     >> [EEG] = SPMA_cleanData(EEG, key=val) 
+% Examples:
+%     >>> [EEG] = SPMA_cleanData(EEG)
+%     >>> [EEG] = SPMA_cleanData(EEG, 'key', val) 
+%     >>> [EEG] = SPMA_cleanData(EEG, key=val) 
 %
-% Inputs:
-%    EEG        = [struct] EEG struct using EEGLAB structure system
+% Parameters:
+%    EEG (struct): EEG struct using EEGLAB structure system
 %
-% Optional inputs
-%    Severity  = [string] Severity of the paraemters to clean data.
+% Other Parameters:
+%    Severity (string): Severity of the paraemters to clean data.
 %               Available values are "loose" or "strict".
-%    SaveExcludedChannels = [logical] Whether to save or not the list of
+%    SaveExcludedChannels (logical): Whether to save or not the list of
 %               excluded channels.
 %
-% Outputs:
-%    EEG = [struct] EEG struct using EEGLAB structure system
-%
-% Authors: Alessandro Tonin, IRCCS San Camillo Hospital, 2024
+% Returns:
+%    EEG (struct): EEG struct using EEGLAB structure system
 % 
-% See also: EEGLAB, POP_SELECT
+% See also: 
+%    EEGLAB, POP_SELECT
 
-function [EEG] = SPMA_cleanData(EEG, opt)
+% Authors: Alessandro Tonin, IRCCS San Camillo Hospital, 2024
+
+
     arguments (Input)
         EEG struct
         % Optional

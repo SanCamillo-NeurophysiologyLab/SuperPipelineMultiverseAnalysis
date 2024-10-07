@@ -1,24 +1,26 @@
+function [EEG] = SPMA_resample(EEG, opt)
 % SPMA_RESAMPLE - Resample an EEG dataset. Based on EEGLAB functions.
 %
-% Usage:
-%     >> [EEG] = SPMA_resample(EEG)
-%     >> [EEG] = SPMA_resample(EEG, 'key', val) 
-%     >> [EEG] = SPMA_resample(EEG, key=val) 
+% Examples:
+%     >>> [EEG] = SPMA_resample(EEG)
+%     >>> [EEG] = SPMA_resample(EEG, 'key', val) 
+%     >>> [EEG] = SPMA_resample(EEG, key=val) 
 %
-% Inputs:
-%    EEG        = [struct] EEG struct using EEGLAB structure system
+% Parameters:
+%    EEG (struct): EEG struct using EEGLAB structure system
 %
-% Optional inputs
-%    Frequency  = [double] The new resampled frequency
-%    Save       = [logical] Whether to save or not the resampled EEG.
-% Outputs:
-%    EEG = [struct] resampled EEG struct using EEGLAB structure system
+% Other Parameters:
+%    Frequency (double): The new resampled frequency
+%    Save (logical): Whether to save or not the resampled EEG.
 %
-% Authors: Alessandro Tonin, IRCCS San Camillo Hospital, 2024
+% Returns:
+%    EEG (struct): resampled EEG struct using EEGLAB structure system
 % 
-% See also: EEGLAB, POP_RESAMPLE
+% See also: 
+%    EEGLAB, POP_RESAMPLE
 
-function [EEG] = SPMA_resample(EEG, opt)
+% Authors: Alessandro Tonin, IRCCS San Camillo Hospital, 2024
+
     arguments (Input)
         EEG struct
         % Optional
