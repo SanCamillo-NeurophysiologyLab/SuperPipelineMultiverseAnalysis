@@ -1,4 +1,0 @@
-python==3.10
-sphinx==8.0.2
-sphinxcontrib-matlabdomain==0.22.2
-furo==2024.8.6
