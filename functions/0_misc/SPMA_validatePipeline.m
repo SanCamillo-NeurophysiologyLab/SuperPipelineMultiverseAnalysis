@@ -1,14 +1,14 @@
-function pipeline = SPMA_validatePipeline(pipelineJSON, opt)
+function pipeline = SPMA_validatePipeline(pipelineFile, opt)
 % SPMA_VALIDATEPIPELINE - Validate a pipeline by checking that all the
 % required fields are filled and that the overall structure is compatible
 % with SPMA.
 %
 % Examples:
-%     >>> SPMA_validatePipeline(pipelineJSON)
-%     >>> SPMA_validatePipeline(pipelineJSON, 'key', 'val')
+%     >>> SPMA_validatePipeline(pipelineFile)
+%     >>> SPMA_validatePipeline(pipelineFile, 'key', 'val')
 %
 % Parameters:
-%    pipelineJSON (string): A json file with the pipeline
+%    pipelineFile (string): A file with the pipeline. Allowed formats are json or yaml.
 %
 % Other Parameters:
 %    OutputFolder (string): The output folder where to save the logs
@@ -22,7 +22,7 @@ function pipeline = SPMA_validatePipeline(pipelineJSON, opt)
 % Authors: Alessandro Tonin, IRCCS San Camillo Hospital, 2024
 
     arguments (Input)
-        pipelineJSON string {mustBeFile}
+        pipelineFile string {mustBeFile}
         % Save options
         opt.OutputFolder string
         % Log options
@@ -42,8 +42,20 @@ function pipeline = SPMA_validatePipeline(pipelineJSON, opt)
     log = SPMA_loggerSetUp("general", logOptions);
 
     %% Load pipeline file
-    pipeline_str = fileread(pipelineJSON);
-    pipeline = jsondecode(pipeline_str);
+    if pipelineFile.endsWith('.json')
+        % it's json format, let's use jsondecode
+        pipeline_str = fileread(pipelineFile);
+        pipeline = jsondecode(pipeline_str);
+    elseif pipelineFile.endsWith('.yaml')
+        % it's yaml format, let's use yaml utils from https://github.com/MartinKoch123/yaml
+        pipeline = yaml.loadFile(pipelineFile);
+        pipeline = replaceFieldxFunction(pipeline);
+    else
+        errmsg = sprintf("Pipeline error - The pipeline file %s must be .json or .yaml", pipelineFile);
+        log.error(errmsg);
+        error(errmsg);
+    end
+
     
     %% Validate pipeline
 
@@ -82,7 +94,7 @@ function pipeline = SPMA_validatePipeline(pipelineJSON, opt)
         
             if ~isempty(wrongFields)
                 errmsg = sprintf("Pipeline error - In step %s the following fields are not allowed: %s. Only fields allowed: %s", ...
-                    steps(s), strjoin(wrongFields, ', '), strjoin(STEPFIELDS, ', '));
+                    strjoin(steps(s), ', '), strjoin(wrongFields, ', '), strjoin(STEPFIELDS, ', '));
                 log.error(errmsg);
                 error(errmsg);
             end
@@ -116,3 +128,19 @@ function pipeline = SPMA_validatePipeline(pipelineJSON, opt)
 
 end
 
+
+function s = replaceFieldxFunction(s)
+% loop all steps
+steps = fieldnames(s);
+for sn = 1:length(steps)
+    step = s.(steps{sn});
+    if isstruct(step)
+        step = RenameField(step,'xFunction','function');
+    else % it's multiuniverse
+        for l = 1:length(step)
+            step{l} = RenameField(step{l},'xFunction','function');
+        end
+    end
+    s.(steps{sn}) = step;
+end
+end

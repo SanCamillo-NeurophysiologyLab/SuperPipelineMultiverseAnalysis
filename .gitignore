@@ -39,6 +39,7 @@ output/*
 
 # Configuration
 *.json
+*.yaml
 
 # Logs
 *.log

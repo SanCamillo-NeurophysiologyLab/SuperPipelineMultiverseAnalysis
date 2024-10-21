@@ -7,7 +7,7 @@
 % Inputs:
 %    data    = [struct] The name of the saved file (default: the name
 %           of the calling function)
-%    pipelineJSON = [string] A json file
+%    pipelineFile = [string] The pipeline file. Allowed formats are json and yaml
 %    saveFolder  = [string] The folder where to save the file (default: the
 %           name of the module of the calling function)
 %
@@ -16,12 +16,12 @@
 % 
 % See also: SAVE, POP_SAVESET
 
-function data = SPMA_runPipeline(data, pipelineJSON, opt)
+function data = SPMA_runPipeline(data, pipelineFile, opt)
     arguments (Input)
         data
     end
     arguments (Repeating)
-        pipelineJSON string {mustBeFile}
+        pipelineFile string {mustBeFile}
     end
     arguments (Input)
         opt.OutputFolder string
@@ -40,9 +40,9 @@ function data = SPMA_runPipeline(data, pipelineJSON, opt)
     log.info(">>> START MULTIVERSE ANALYSIS <<<")
 
     %% Load pipeline
-    allPipelines = cell(size(pipelineJSON));
-    for n_pipeline = 1:length(pipelineJSON)
-        pipelineFile = pipelineJSON{n_pipeline};
+    allPipelines = cell(size(pipelineFile));
+    for n_pipeline = 1:length(pipelineFile)
+        pipelineFile = pipelineFile{n_pipeline};
         log.info(sprintf("Validate pipeline %s...", pipelineFile))
         pipeline = SPMA_validatePipeline(pipelineFile);
         log.info("...Pipeline is valid!")
