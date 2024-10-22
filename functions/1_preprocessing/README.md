@@ -1,1 +1,1 @@
-This folder contains all the functions related to the preprocessing step. prova
+This folder contains all the functions related to the preprocessing step.
