@@ -56,8 +56,9 @@ function [EEG] = SPMA_runica(EEG, opt)
     
     %% Save ICA
     if config.SaveBefore
-        log.info("Saving data before ICA")
-        SPMA_saveData(EEG,config.saveNameBefore)
+        log.info("Saving data before ICA");
+        logParams = unpackStruct(logConfig);
+        SPMA_saveData(EEG, "Name", config.SaveNameBefore, "Folder", module, "OutputFolder", config.OutputFolder, logParams{:})
     end
 
     %% Run ICA
