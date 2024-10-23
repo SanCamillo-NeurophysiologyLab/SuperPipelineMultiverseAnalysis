@@ -43,61 +43,103 @@ The code is structured in a modular way, where each function can be used as it i
 
 The file `SuperPipeline.m` is just a template to build a pipeline. (let's see...)
 
-The pipeline is defined with a json file. The structure of the file is the following:
+The pipeline is defined with a json or yaml file. The structure of the file is the following:
+
+#### Pipeline JSON
 
 ```json
 {
-  "step1": {
-    "name": "downsampling",
-    "function": "SPMA_resample",
-    "save": true,
-    "params": [
-      {
-        "Frequency": 500,
-      }
-    ]
-  },
-  "step2": {
-    "function": "SPMA_filter",
-    "params": []
-  },
-  "step3": [
-    {
-      "function": "SPMA_ica",
-      "name": "ica1",
-      "params": [
-        {
-          "param_ica": 10
+	"step1": {
+        "function": "SPMA_resample",
+		"name": "downsampling",
+        "save": true,
+		"params": {
+		    "Frequency": 250
         }
-      ]
-    },
-    {
-      "function": "SPMA_ica",
-      "name": "ica2",
-      "params": [
+	},
+	"step2.5": [
         {
-          "param_pca": 20
+		"function": "SPMA_filter",
+        "name": "bandpass",
+        "save": true,
+		"params": {
+            "Type": "bandpass",
+            "LowCutoff": 0.5,
+            "HighCutoff": 48
+            }        
+	    },
+        {
+		"function": "SPMA_filter",
+        "name": "lowpass",
+		"params": {
+            "Type": "lowpass",
+            "HighCutoff": 48
+            }
+	    }
+    ],
+    "step30": {
+        "function": "SPMA_removeChannels",
+        "params": {
+            "Channels": ["E67","E73","E82","E91","E92","E102","E111","E120","E133","E145","E165","E174","E187","E199","E208","E209","E216","E217","E218","E219","E225","E226","E227","E228","E229","E230","E231","E232","E233","E234","E235","E236","E237","E238","E239","E240","E241","E242","E243","E244","E245","E246","E247","E248","E249","E250","E251","E252","E253","E254","E255","E256"]
         }
-      ]
-    }
-  ],
-  "step4": [
-    {
-      "function": "SPMA_source",
-      "name": "source1"
     },
-    {
-      "function": "SPMA_source",
-      "name": "source2"
+    "step4": {
+        "function": "SPMA_selectTime",
+        "params": {
+            "AfterStart": 5,
+            "BeforeEnd": 5
+        }
     },
-    {
-      "function": "SPMA_source",
-      "name": "source3"
+    "step5": {
+        "function": "SPMA_cleanData",
+        "save": true,
+        "params": {
+            "Severity": "loose"
+        }
     }
-  ]
 }
 ```
 
+#### Pipeline YAML
+```yaml
+step1:
+  function: SPMA_resample
+  name: downsampling
+  save: true
+  params:
+    Frequency: 250
+
+step2:
+  - function: SPMA_filter
+    name: bandpass
+    save: true
+    params:
+      Type: bandpass
+      LowCutoff: 0.5
+      HighCutoff: 48
+  - function: SPMA_filter
+    name: lowpass
+    params:
+      Type: lowpass
+      HighCutoff: 48
+
+step3:
+  function: SPMA_removeChannels
+  params:
+    Channels: ["E67","E73","E82","E91","E92","E102","E111","E120","E133","E145","E165","E174","E187","E199","E208","E209","E216","E217","E218","E219","E225","E226","E227","E228","E229","E230","E231","E232","E233","E234","E235","E236","E237","E238","E239","E240","E241","E242","E243","E244","E245","E246","E247","E248","E249","E250","E251","E252","E253","E254","E255","E256"]
+
+step4:
+  function: SPMA_selectTime
+  params:
+    AfterStart: 5
+    BeforeEnd: 5
+
+step5:
+  function: SPMA_cleanData
+  save: true
+  params:
+    Severity: loose
+```
 The `functions` directory stores one subdirectory for each of the included modules. Each of the module-subdirectory contains all the functions that implement the developed steps.
 
 All the functions have the prefix `SPMA_` in order to avoid conflicts with other Matlab packages.
